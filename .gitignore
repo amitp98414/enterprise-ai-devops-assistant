@@ -22,3 +22,4 @@ venv/
 
 # Python cache
 .pytest_cache/
+system-audit.txt
