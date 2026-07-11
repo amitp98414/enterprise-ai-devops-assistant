@@ -46,7 +46,11 @@ else
 fi
 
 if command -v docker >/dev/null 2>&1; then
-    docker --version
+    if docker --version >/dev/null 2>&1; then
+        docker --version
+    else
+        echo "Docker CLI: FOUND BUT NOT WORKING"
+    fi
 else
     echo "Docker: NOT INSTALLED"
 fi
@@ -79,7 +83,13 @@ echo
 echo "=== RUNNING DOCKER CONTAINERS ==="
 
 if command -v docker >/dev/null 2>&1; then
-    docker ps || true
+    if docker info >/dev/null 2>&1; then
+        docker ps
+    else
+        echo "Docker daemon: NOT AVAILABLE"
+    fi
+else
+    echo "Docker: NOT INSTALLED"
 fi
 
 echo

@@ -1,19 +1,32 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+from app.core.config import settings
+from app.services.openai_service import ask_ai
 
 app = FastAPI(
-    title="Enterprise AI DevOps Assistant",
-    version="1.0.0"
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
 )
+
+
+class ChatRequest(BaseModel):
+    prompt: str
+
 
 @app.get("/")
 def root():
     return {
-        "message": "Enterprise AI DevOps Assistant Running"
+        "application": settings.APP_NAME,
+        "version": settings.APP_VERSION,
     }
 
-@app.get("/health")
-def health():
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    answer = ask_ai(request.prompt)
+
     return {
-        "status": "healthy"
-}    
+        "response": answer
+    }    
 
