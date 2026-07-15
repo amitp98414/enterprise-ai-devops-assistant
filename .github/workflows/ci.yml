@@ -1,0 +1,37 @@
+name: AmitOps AI CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+
+    env:
+      OPENAI_API_KEY: test-key-for-ci
+      OPENAI_MODEL: gpt-4.1-mini
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+
+      - name: Run tests with coverage
+        working-directory: backend
+        run: python -m pytest -v --cov=app --cov-report=term-missing
