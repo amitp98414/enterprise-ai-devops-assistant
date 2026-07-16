@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.agent_routes import router as agent_router
 from app.core.config import settings
@@ -48,3 +49,6 @@ def chat(request: ChatRequest):
     return {
         "response": answer,
     }
+
+# Expose Prometheus metrics for monitoring.
+Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
