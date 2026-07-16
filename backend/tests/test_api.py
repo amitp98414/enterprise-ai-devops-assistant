@@ -32,3 +32,10 @@ def test_agents_endpoint():
     response = client.get("/agent/modes")
 
     assert response.status_code == 200
+
+def test_metrics_endpoint():
+    response = client.get("/metrics")
+
+    assert response.status_code == 200
+    assert "text/plain" in response.headers["content-type"]
+    assert "python_info" in response.text

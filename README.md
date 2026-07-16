@@ -197,3 +197,39 @@ DevOps Engineer focused on Docker, Linux, CI/CD automation and cloud deployment.
 ## License
 
 Licensed under the MIT License.
+## Observability Stack
+
+The project includes a production-style monitoring stack powered by Prometheus and Grafana.
+
+| Service | URL | Purpose |
+|---|---|---|
+| Backend API | http://localhost:8000 | FastAPI application |
+| API Documentation | http://localhost:8000/docs | Interactive Swagger documentation |
+| Prometheus | http://localhost:9091 | Metrics and alert rules |
+| Grafana | http://localhost:3000 | Monitoring dashboards |
+
+### Start the stack
+
+Create the local environment file and replace the example password:
+
+```bash
+cp .env.example .env
+docker compose up -d
+```
+
+### Monitoring features
+
+- FastAPI Prometheus metrics at `/metrics`
+- Provisioned Prometheus data source
+- Version-controlled Grafana dashboard
+- API availability monitoring
+- Request-rate and HTTP-status graphs
+- Error-rate monitoring
+- P95 response-time monitoring
+- API-down, high-error-rate and high-latency alerts
+
+The dashboard is available under:
+
+```text
+Dashboards → DevOps Monitoring → DevOps API Monitoring
+```
