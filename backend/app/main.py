@@ -1,11 +1,11 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.agent_routes import router as agent_router
 from app.core.config import settings
 from app.services.openai_service import ask_ai
-
+from app.core.security import enforce_rate_limit
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -43,7 +43,10 @@ def health():
 
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+def chat(
+    request: ChatRequest,
+    _: str = Depends(enforce_rate_limit),
+):
     answer = ask_ai(request.prompt)
 
     return {
