@@ -1,8 +1,8 @@
 from typing import Literal
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
-
+from app.core.security import enforce_rate_limit
 from app.services.agent_service import execute_agent
 
 
@@ -32,7 +32,10 @@ def list_agent_modes():
 
 
 @router.post("/run")
-async def run_agent(request: AgentRunRequest):
+async def run_agent(
+    request: AgentRunRequest,
+    _: str = Depends(enforce_rate_limit),
+):
     try:
         return await execute_agent(
             prompt=request.prompt,
@@ -44,7 +47,7 @@ async def run_agent(request: AgentRunRequest):
         raise HTTPException(
             status_code=500,
             detail=(
-                "Agent execute nahi ho saka. Backend terminal logs check karo. "
-                "API key, model name aur internet connection verify karo."
+                "The agent could not execute. Check the backend terminal logs. "
+                "Verify the API key, model name, and internet connection. "
             ),
         ) from exc

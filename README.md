@@ -66,14 +66,15 @@ flowchart TD
 
 ## API Endpoints
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/` | Application information |
-| GET | `/health` | Service health status |
-| GET | `/agent/modes` | Available agent modes |
-| POST | `/agent/run` | Run the selected AI agent |
-| POST | `/chat` | Send a general AI request |
-| GET | `/docs` | Interactive Swagger documentation |
+| Method | Endpoint | Access | Purpose |
+|---|---|---|---|
+| GET | `/` | Public | Application information |
+| GET | `/health` | Public | Service health status |
+| GET | `/agent/modes` | Public | Available agent modes |
+| GET | `/metrics` | Public | Prometheus application metrics |
+| POST | `/agent/run` | `X-API-Key` required | Run the selected AI agent |
+| POST | `/chat` | `X-API-Key` required | Send a general AI request |
+| GET | `/docs` | Public | Interactive Swagger documentation |
 
 ## Technology Stack
 
@@ -181,9 +182,43 @@ Both pipelines install dependencies, run the backend tests and generate coverage
 
 ## Security
 
-This project supports defensive and authorized security work only. Run security-related operations exclusively on systems you own or have explicit permission to test.
+OpsSage AI separates public monitoring endpoints from protected AI execution endpoints.
 
-Secrets are loaded through environment variables and excluded from Git tracking.
+### Public Endpoints
+
+The following endpoints are available without authentication:
+
+- `GET /`
+- `GET /health`
+- `GET /agent/modes`
+- `GET /metrics`
+- `GET /docs`
+
+### Protected AI Endpoints
+
+The following endpoints require an `X-API-Key` request header:
+
+- `POST /chat`
+- `POST /agent/run`
+
+```bash
+curl -X POST https://opssage-ai.onrender.com/chat \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: ${OPSSAGE_API_KEY}" \
+  -d '{"prompt":"Check the application health"}'
+```
+
+The default rate limit is `10 requests per 60 seconds` for each API key.
+
+| Status | Meaning |
+|---|---|
+| `401` | API key is missing or invalid |
+| `429` | Rate limit has been exceeded |
+| `503` | AI execution is disabled on this deployment |
+
+> The public portfolio deployment intentionally keeps AI execution disabled to prevent unauthorized usage and unexpected API costs. Secrets must be configured through secure environment variables and must never be committed to Git.
+
+This project supports defensive and authorized security work only. Run security-related operations exclusively on systems you own or have explicit permission to test.
 
 ## Roadmap
 
