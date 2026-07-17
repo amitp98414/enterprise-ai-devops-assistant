@@ -1,4 +1,8 @@
+from pathlib import Path
+
 from fastapi import Depends, FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 
@@ -6,6 +10,10 @@ from app.api.agent_routes import router as agent_router
 from app.core.config import settings
 from app.services.openai_service import ask_ai
 from app.core.security import enforce_rate_limit
+
+from app.core.security import enforce_rate_limit
+
+STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -16,6 +24,7 @@ app = FastAPI(
     ),
 )
 
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.include_router(agent_router)
 
 
@@ -31,6 +40,11 @@ def root():
         "agent_endpoint": "/agent/run",
         "documentation": "/docs",
     }
+
+
+@app.get("/demo", include_in_schema=False)
+def demo():
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 @app.get("/health")
