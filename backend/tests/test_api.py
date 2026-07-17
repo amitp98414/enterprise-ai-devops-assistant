@@ -129,3 +129,13 @@ def test_chat_rate_limit(monkeypatch):
         "Rate limit exceeded. Try again later."
     )
     assert int(blocked_response.headers["Retry-After"]) >= 1
+
+def test_demo_ui_assets():
+    demo_response = client.get("/demo")
+    css_response = client.get("/static/styles.css")
+    js_response = client.get("/static/app.js")
+
+    assert demo_response.status_code == 200
+    assert "OpsSage AI" in demo_response.text
+    assert css_response.status_code == 200
+    assert js_response.status_code == 200

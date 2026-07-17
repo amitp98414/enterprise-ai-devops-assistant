@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="OpsSage AI — secure AI-powered DevOps diagnostics and automation."
+  >
+  <title>OpsSage AI | DevOps Intelligence</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="/demo">
+      <span class="brand-icon">O</span>
+      <span>OpsSage AI</span>
+    </a>
+
+    <nav>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#live-status">Live Status</a>
+      <a href="/docs" target="_blank">API Docs</a>
+    </nav>
+
+    <span id="nav-status" class="status-badge">Checking API...</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">AI-POWERED DEVOPS OPERATIONS</p>
+
+        <h1>Diagnose infrastructure issues with confidence.</h1>
+
+        <p class="hero-description">
+          OpsSage AI combines specialist AI agents, secure APIs and
+          production-grade observability for faster DevOps troubleshooting.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary" href="#agent-demo">Explore Demo</a>
+          <a class="button secondary" href="/docs" target="_blank">
+            Open Swagger API
+          </a>
+        </div>
+
+        <div class="trust-row">
+          <span>FastAPI</span>
+          <span>Docker</span>
+          <span>Prometheus</span>
+          <span>Grafana</span>
+          <span>CI/CD</span>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="terminal-bar">
+          <span></span><span></span><span></span>
+          <small>opssage-ai / production</small>
+        </div>
+
+        <div class="terminal-content">
+          <p><span class="prompt">$</span> check service health</p>
+          <p class="success">✓ API service reachable</p>
+          <p class="success">✓ Monitoring enabled</p>
+          <p class="success">✓ Security controls active</p>
+          <p><span class="prompt">$</span> select specialist agent</p>
+          <p class="info">→ DevOps agent ready</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="live-status" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">LIVE SYSTEM</p>
+        <h2>Service health</h2>
+      </div>
+
+      <div class="status-grid">
+        <article class="metric-card">
+          <span>API Status</span>
+          <strong id="api-status">Checking...</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>Application</span>
+          <strong id="application-name">OpsSage AI</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>Version</span>
+          <strong id="application-version">--</strong>
+        </article>
+      </div>
+    </section>
+
+    <section id="capabilities" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">CAPABILITIES</p>
+        <h2>One platform. Multiple specialists.</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">01</div>
+          <h3>DevOps Diagnostics</h3>
+          <p>Analyse Docker, Linux, Git and infrastructure incidents.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">02</div>
+          <h3>Security Analysis</h3>
+          <p>Support authorized defensive security investigation workflows.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">03</div>
+          <h3>Observability</h3>
+          <p>Prometheus metrics, Grafana dashboards and alerting rules.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="agent-demo" class="section demo-section">
+      <div class="demo-copy">
+        <p class="eyebrow">SECURE AGENT DEMO</p>
+        <h2>Run an OpsSage specialist</h2>
+        <p>
+          AI execution requires an authorized API key. The public portfolio
+          deployment keeps execution disabled to prevent unauthorized usage.
+        </p>
+      </div>
+
+      <form id="agent-form" class="agent-form">
+        <label for="mode">Agent mode</label>
+        <select id="mode" name="mode">
+          <option value="auto">Automatic selection</option>
+          <option value="devops">DevOps specialist</option>
+          <option value="bugbounty">Authorized security specialist</option>
+        </select>
+
+        <label for="prompt">Describe the issue</label>
+        <textarea
+          id="prompt"
+          name="prompt"
+          rows="5"
+          minlength="3"
+          maxlength="12000"
+          placeholder="Example: Diagnose why my Docker service is restarting..."
+          required
+        ></textarea>
+
+        <label for="api-key">Authorized API key</label>
+        <input
+          id="api-key"
+          name="api-key"
+          type="password"
+          placeholder="X-API-Key"
+        >
+
+        <button class="button primary" type="submit">Run Agent</button>
+        <div id="agent-result" class="agent-result" aria-live="polite">
+          Waiting for a request.
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span>OpsSage AI</span>
+    <span>Secure DevOps Intelligence</span>
+    <a href="https://github.com/amitp98414/opssage-ai" target="_blank">
+      GitHub Repository
+    </a>
+  </footer>
+</body>
+</html>
